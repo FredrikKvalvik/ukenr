@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+	flag.Usage = usage
 
 	var (
 		date time.Time
@@ -20,7 +21,8 @@ func main() {
 		d, err := time.Parse(time.DateOnly, t)
 		if err != nil {
 			fmt.Printf("invalid date string: %s\n", t)
-			fmt.Print(usage())
+
+			flag.Usage()
 			return
 		}
 		date = d
@@ -41,12 +43,12 @@ func formatDate(t time.Time) string {
 	return s.String()
 }
 
-func usage() string {
+func usage() {
 	var s strings.Builder
 
 	fmt.Fprintf(&s, "Usage:\n")
 	fmt.Fprintf(&s, "  %s", "ukenr\n")
 	fmt.Fprintf(&s, "  %s", "ukenr [yyyy-mm-dd]\n")
 
-	return s.String()
+	fmt.Print(s.String())
 }
